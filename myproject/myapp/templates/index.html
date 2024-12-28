@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Login</h2>
+    <form action=" {% url 'dadosPage' %} " method="post">
+        {% csrf_token %}
+        <input type="text" name="nome" />
+        <br/>
+        <input type="text" name="msg" />
+        <br/>
+        <input type="text" name="data" />
+        <br/>
+        <input type="text" name="hora" />
+        <br/>
+        <button type="submit">Entrar</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+#Instalação
+django-admin startproject myproject
+cd myproject
+django-admin startapp myapp
+python manage.py runserver
+
+#Config
+pip install djangorestframework
+Setting add: 'rest_framework',
+
+#Criando Projeto Vite Typescript
+npm create vite@latest frontend --template vue
+npm i
+npm install styled-components
