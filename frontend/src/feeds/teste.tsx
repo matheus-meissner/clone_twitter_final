@@ -20,7 +20,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 
-const Feed = () => {
+const Teste = () => {
     // Nome do usuário
     const nome = "Fernando";
 
@@ -64,93 +64,80 @@ const Feed = () => {
                     console.error("Erro ao enviar dados:", error);
                     alert("Erro ao conectar ao servidor. Verifique os detalhes.");
                 });
-                window.location.reload();
         } else {
             alert("Digite algo para postar");
         }
     };
     
-
+    
 
     return (
         <>
-
             <FeedPage>
                 <BarraLateral>
                     <Container>
                         <Row>
                             <Col>
-                                <Image style={{width:'150px', height:'150px'}} src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png" roundedCircle />
+                                <Image
+                                    style={{ width: "150px", height: "150px" }}
+                                    src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
+                                    roundedCircle
+                                />
                             </Col>
                         </Row>
                     </Container>
                     <TextTitle>Menu</TextTitle>
                     <Ul>
-                        <Li>
-                            Inicio
-                        </Li>
-                        <Li>
-                            Perfil
-                        </Li>
-                        <Li>
-                            Mensagens
-                        </Li>
-                        <Li>
-                            Configuração
-                        </Li>
-                        <Li>
-                            Sair
-                        </Li>
+                        <Li>Inicio</Li>
+                        <Li>Perfil</Li>
+                        <Li>Mensagens</Li>
+                        <Li>Configuração</Li>
+                        <Li>Sair</Li>
                     </Ul>
                 </BarraLateral>
 
                 <ContainerFeed>
                     <TextTitle>Feed</TextTitle>
-                    {/*                     <ContainerPost>
-                        <TextArea placeholder="O que esta acontecendo..." maxLength={200} onChange={(event) => setInp(event.target.value)} id="nameArea" />
-                        <ContainerButton>
-                            <ButtonPost onClick={btnPost}>POSTAR</ButtonPost>
-                        </ContainerButton>
-                    </ContainerPost> */}
 
-                    <Card style={{ width: '48rem', margin: '0 auto' }}>
-                        <TextArea placeholder="O que esta acontecendo..." maxLength={52} onChange={(event) => setInp(event.target.value)} id="nameArea" />
-                        <Card.Body style={{ textAlign: 'right' }}>
+                    <Card style={{ width: "48rem", margin: "0 auto" }}>
+                        <TextArea
+                            placeholder="O que está acontecendo..."
+                            maxLength={52}
+                            value={inp}
+                            onChange={(event) => setInp(event.target.value)}
+                            id="nameArea"
+                        />
+                        <Card.Body style={{ textAlign: "right" }}>
                             <ButtonPost onClick={btnPost}>POSTAR</ButtonPost>
                         </Card.Body>
                     </Card>
 
-
                     <Table>
-
-                        <Th>Nome</Th>
-                        <Th>Mensagem</Th>
-                        <Th>Data</Th>
-                        <Th>Hora</Th>
-                        <Th>Settings</Th>
-
-
+                        <thead>
+                            <Tr>
+                                <Th>Nome</Th>
+                                <Th>Mensagem</Th>
+                                <Th>Data</Th>
+                                <Th>Hora</Th>
+                                <Th>Configurações</Th>
+                            </Tr>
+                        </thead>
                         <tbody>
                             {list_msg.map((item) => (
                                 <Tr key={item.id}>
                                     <Td>{item.name}</Td>
                                     <Td>{item.msg}</Td>
-                                    <Td>{item.dt}</Td>
+                                    <Td>{item.date}</Td>
                                     <Td>{item.hour}</Td>
                                     <Td>{"Configuração"}</Td>
                                 </Tr>
                             ))}
                         </tbody>
-
-
                     </Table>
-
                 </ContainerFeed>
-
             </FeedPage>
-
         </>
-    )
-}
+    );
+};
 
-export default Feed;
+export default Teste;

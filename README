@@ -12,3 +12,5 @@ Setting add: 'rest_framework',
 npm create vite@latest frontend --template vue
 npm i
 npm install styled-components
+
+pip install django-cors-headers

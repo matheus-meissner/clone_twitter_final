@@ -67,6 +67,7 @@ color: white;
 width: 200px;
 height: 40px;
 border: none;
+border-radius: 5px;
 
 &:hover {
     background-color: #a9dca7;
