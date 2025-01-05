@@ -55,6 +55,7 @@ resize: none;
 font-size: 28px;
 text-align: center;
 align-content: center;
+border: solid;
 `
 export const ContainerButton = styled.div`
 width: 100%;
@@ -85,15 +86,27 @@ export const Th = styled.th`
 export const Tr = styled.tr`
 border-bottom: 1px solid #ddd;
 height: 80px;
-cursor: pointer;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+transition: 0.3s;
+border-radius: 15px;
 &:hover{
     background-color: #ddd;
     }
 `
 
 export const Td = styled.td`
-max-width: 200px; /* Define uma largura máxima */
-overflow: hidden; /* Oculta o conteúdo que ultrapassa o limite */
-text-overflow: ellipsis; /* Mostra "..." para indicar conteúdo cortado */
+max-width: 200px; 
+overflow: hidden; 
+text-overflow: ellipsis; 
 white-space: nowrap;
+border: 1px solid #e0e0e0;
+`
+
+export const A = styled.a`
+text-decoration: none;
+`
+
+export const Icon = styled.img`
+width: 30px;
+cursor: pointer;
 `

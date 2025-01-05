@@ -14,3 +14,6 @@ npm i
 npm install styled-components
 
 pip install django-cors-headers
+
+
+python manage.py createsuperuser
