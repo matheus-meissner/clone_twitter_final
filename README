@@ -17,3 +17,8 @@ pip install django-cors-headers
 
 
 python manage.py createsuperuser
+
+
+
+### PARA HOSPEDAGEM
+npm run build
