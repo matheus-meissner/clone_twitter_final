@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { ContainerPagLogin, H1, Image, ContainerLogo, Logo, ContainerLogin, InputUserLogin, ButtonLogin, LabelLogin, LabelLoginText } from "./login_styled";
+import { ContainerPagLogin, Image, ContainerLogo, Logo, ContainerLogin, InputUserLogin, ButtonLogin, LabelLogin, LabelLoginText } from "./login_styled";
 import fundo from "../assets/fundo.png";
 import logo from "../assets/logo_tr.png";
-import { useDispatch } from "react-redux";
-import { userInfo } from "../store/reducers/slicers";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

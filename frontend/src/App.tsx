@@ -2,7 +2,7 @@ import './App.css';
 import Login from './logins/login_component';
 import Feed from './feeds/feed_component';
 import Register from './logins/register_component';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { BrowserRouter, Routes, Route} from "react-router";
 import ProtectedRoute from './logins/ProtectRoute';
 
 function App() {

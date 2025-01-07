@@ -23,18 +23,14 @@ import Card from 'react-bootstrap/Card';
 import axios from "axios";
 import avatar from "../assets/avatar.png";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
 import icon from "../assets/icon.png"
 
 const Feed = () => {
     // Nome do usuário
     //const nome = "Fernando";
-    const nome = useSelector((state:RootState)=>state.posts.user);
     const username = localStorage.getItem("username");
 
     // Mensagens e estado dos inputs
-    const [msg, setMsg] = useState<string>("");
     const [inp, setInp] = useState<string>("");
     const [list_msg, setListMsg] = useState<any[]>([]);
 

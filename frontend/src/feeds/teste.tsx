@@ -25,7 +25,6 @@ const Teste = () => {
     const nome = "Fernando";
 
     // Mensagens e estado dos inputs
-    const [msg, setMsg] = useState<string>("");
     const [inp, setInp] = useState<string>("");
     const [list_msg, setListMsg] = useState<any[]>([]);
 
