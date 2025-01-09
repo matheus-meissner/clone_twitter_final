@@ -26,7 +26,7 @@ import { useNavigate } from "react-router";
 import icon from "../assets/icon.png"
 
 const Feed = () => {
-    // Nome do usuário
+    /// Nome do usuário
     //const nome = "Fernando";
     const username = localStorage.getItem("username");
 
