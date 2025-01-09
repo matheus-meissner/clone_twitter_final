@@ -35,7 +35,8 @@ const Feed = () => {
     const [list_msg, setListMsg] = useState<any[]>([]);
 
     // Backend API base URL
-    const API_URL = "http://127.0.0.1:8000/data/";
+    //const API_URL = "http://127.0.0.1:8000/data/";
+    const API_URL = "https://fernando10092.pythonanywhere.com/data/";
 
     // Carregar mensagens do backend na inicialização
     useEffect(() => {
@@ -83,7 +84,8 @@ const Feed = () => {
             // Opcional: Notificar o backend sobre o logout (caso necessário)
             const token = localStorage.getItem("token");
             if (token) {
-                const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+                //const response = await fetch("http://127.0.0.1:8000/api/logout/", {
+                const response = await fetch("https://fernando10092.pythonanywhere.com/api/logout/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
