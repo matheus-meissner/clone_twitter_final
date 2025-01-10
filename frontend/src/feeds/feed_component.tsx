@@ -15,6 +15,7 @@ import {
     A,
     Icon
 } from "./feed_styled";
+import { Link } from "react-router";
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -127,11 +128,11 @@ const Feed = () => {
                     </Container>
                     <TextTitle>{username}</TextTitle>
                     <Ul>
-                        <A href="/perfil">
+                        <Link to="/perfil">
                             <Li>
                                 Inicio
                             </Li>
-                        </A>
+                        </Link>
 
                         <Li>
                             Perfil
