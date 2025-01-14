@@ -64,43 +64,45 @@ const Feed = () => {
 
     // Função para postar mensagem
     const btnPost = () => {
-        try{
-        if (inp !== "") {
-            const data = new Date();
-            const curtiu = "curtir";
-            const commit1 = "-";
-            const commit2 = "-";
-            const commit3 = "-";
-            const postData = {
-                name: username,
-                msg: inp,
-                dt: `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`, // Incluindo o campo 'dt'
-                hour: `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`,
-                curtiu: curtiu,
-                commit1: commit1,
-                commit2: commit2,
-                commit3: commit3
-            };
-            
-            //Chamada via API - axios
-            axios.post(API_URL, postData)
-                .then((response) => {
-                    console.log("Dados enviados com sucesso:", response.data);
-                    setInp(""); // Limpa o input
-                    (document.getElementById('nameArea') as HTMLTextAreaElement)!.value = '';
-                })
-                .catch((error) => {
-                    console.error("Erro ao enviar dados:", error);
-                    alert("Erro ao conectar ao servidor. Verifique os detalhes.");
-                });
-            window.location.reload();
-        } else {
-            alert("Digite algo para postar");
-        }
 
-    }catch(error){
-        alert(error)
-    }
+        try {
+            console.log("CHAMEI o POST")
+            if (inp !== "") {
+                const data = new Date();
+                const curtiu = "curtir";
+                const commit1 = "-";
+                const commit2 = "-";
+                const commit3 = "-";
+                const postData = {
+                    name: username,
+                    msg: inp,
+                    dt: `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`, // Incluindo o campo 'dt'
+                    hour: `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`,
+                    curtiu: curtiu,
+                    commit1: commit1,
+                    commit2: commit2,
+                    commit3: commit3
+                };
+
+                //Chamada via API - axios
+                axios.post(API_URL, postData)
+                    .then((response) => {
+                        console.log("Dados enviados com sucesso:", response.data);
+                        setInp(""); // Limpa o input
+                        (document.getElementById('nameArea') as HTMLTextAreaElement)!.value = '';
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao enviar dados:", error);
+                        alert("Erro ao conectar ao servidor. Verifique os detalhes.");
+                    });
+            } else {
+                alert("Digite algo para postar");
+            }
+
+        } catch (error) {
+            alert(error)
+        }
     };
 
     //Aparecer comentário
