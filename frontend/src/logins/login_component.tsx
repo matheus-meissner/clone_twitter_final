@@ -23,7 +23,7 @@ const Login = () => {
             // Armazene o token e o nome de usuário no localStorage
             localStorage.setItem("token", data.access); // Token JWT
             localStorage.setItem("username", username); // Nome do usuário
-            navigate("/perfil");
+            navigate("/feed");
         } else {
             alert("Credenciais inválidas.");
         }

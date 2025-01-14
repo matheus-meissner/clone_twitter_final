@@ -62,17 +62,60 @@ class DataListCreateAPIView(APIView):
     
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST','DELETE', 'PUT'])
 def Requisicao(request):
+    #POST
     if request.method == 'POST':
         name = request.data.get("name")
         msg = request.data.get("msg")
         dt = request.data.get("dt")
         hour = request.data.get("hour")
-        dados = Data(name=name, msg=msg, dt=dt, hour=hour)
+        curtiu = request.data.get("curtiu")
+        commit1 = request.data.get("commit1")
+        commit2 = request.data.get("commit2")
+        commit3 = request.data.get("commit3")
+        dados = Data(name=name, msg=msg, dt=dt, hour=hour, curtiu=curtiu, commit1=commit1, commit2=commit2, commit3=commit3)
         dados.save()
         return Response("Dados inseridos no banco")
+    
+    #DELETE
+    elif request.method == 'DELETE':
+        try:
+            # Tenta buscar o objeto pelo ID
+            id = request.data.get("id")
+            index = Data.objects.get(id=id)
+        except Data.DoesNotExist:
+        # Retorna um erro 404 se o objeto não existir
+            return Response({"error": "Data with id=1 does not exist."}, status=status.HTTP_404_NOT_FOUND)
+    
+    # Deleta o objeto encontrado
+        index.delete()
 
+    elif request.method == 'PUT':
+        id = request.data.get("id")
+        index = Data.objects.get(id=id)
+        index.curtiu = request.data.get("curtiu", index.curtiu)
+        index.save()
+        return Response("Atualizado")
+
+    #GET
     banco_dados = Data.objects.all()
     serializer = DataSerializer(banco_dados, many=True)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def RequisicaoCommit(request):
+    if request.method == 'PUT':
+        id = request.data.get("id")
+        index = Data.objects.get(id=id)
+        index.commit1 = request.data.get("commit1", index.commit1)
+        index.save()
+        return Response("Commit Atualizado 1")
+    
+@api_view(['PUT'])
+def RequisicaoUpdatePost(request):
+    id = request.data.get("id")
+    index = Data.objects.get(id=id)
+    index.msg = request.data.get("msg", index.msg)
+    index.save()
+    return Response("Dados Alterados")

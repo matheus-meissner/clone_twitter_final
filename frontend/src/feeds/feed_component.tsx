@@ -1,34 +1,42 @@
 import { useState, useEffect } from "react";
 import {
     FeedPage,
-    Ul,
-    Li,
-    BarraLateral,
     ContainerFeed,
     TextTitle,
     TextArea,
     ButtonPost,
-    Table,
-    Th,
-    Tr,
-    Td,
-    A,
-    Icon
+    Icon,
+    DivCard,
+    NomePost,
+    TimePost,
+    HeadPost,
+    ContInteragir,
+    BtnInteragir,
+    MsgPost,
+    ContFeed2,
+    InputCommit,
+    NewCommit,
+    ExtrCommit,
+    ExtFeed,
+    ContainerMsg,
+    ContInteragirPost,
+    InputUpdatePost
 } from "./feed_styled";
-import { Link } from "react-router";
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
-import avatar from "../assets/avatar.png";
-import { useNavigate } from "react-router";
-import icon from "../assets/icon.png"
+import lixo from "../assets/lixo.png";
+import lapis from "../assets/icon.png";
+import coment from "../assets/commit.png";
+import neutro from "../assets/tema_neutro.png";
+import blue from "../assets/tema_blue.png";
+import pink from "../assets/tema_pink.png";
+import { setColor } from "../store/reducers/slicers";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import Barra from "../barra/barra_components";
 
 const Feed = () => {
-    //// Nome do usuário
-    //const nome = "Fernando";
+    // Nome do usuário armazenado no LocalStorage
     const username = localStorage.getItem("username");
 
     // Mensagens e estado dos inputs
@@ -43,7 +51,11 @@ const Feed = () => {
     useEffect(() => {
         axios.get(API_URL)
             .then((response) => {
-                setListMsg(response.data);
+                const updatedData = response.data.map((item: any) => ({
+                    ...item,
+                    typing: "", // Adiciona o campo typing para cada item
+                }));
+                setListMsg(updatedData);
             })
             .catch((error) => {
                 console.error("Erro ao carregar dados:", error);
@@ -54,13 +66,22 @@ const Feed = () => {
     const btnPost = () => {
         if (inp !== "") {
             const data = new Date();
+            const curtiu = "curtir";
+            const commit1 = "-";
+            const commit2 = "-";
+            const commit3 = "-";
             const postData = {
                 name: username,
                 msg: inp,
                 dt: `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`, // Incluindo o campo 'dt'
                 hour: `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`,
+                curtiu: curtiu,
+                commit1: commit1,
+                commit2: commit2,
+                commit3: commit3
             };
 
+            //Chamada via API - axios
             axios.post(API_URL, postData)
                 .then((response) => {
                     console.log("Dados enviados com sucesso:", response.data);
@@ -77,119 +98,237 @@ const Feed = () => {
         }
     };
 
-
-    const navigate = useNavigate();
-
-    const handleLogout = async () => {
-        try {
-            // Opcional: Notificar o backend sobre o logout (caso necessário)
-            const token = localStorage.getItem("token");
-            if (token) {
-                //const response = await fetch("http://127.0.0.1:8000/api/logout/", {
-                const response = await fetch("https://fernando10092.pythonanywhere.com/api/logout/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`, // Envia o token ao backend
-                    },
-                });
-
-                if (response.ok) {
-                    console.log("Logout realizado com sucesso no backend.");
-                } else {
-                    console.warn("Erro ao realizar logout no backend.");
-                }
-            }
-
-            // Limpa o token e outros dados de autenticação do cliente
-            localStorage.removeItem("token");
-
-            // Redireciona para a página de login
-            navigate("/");
-
-        } catch (error) {
-            console.error("Erro ao fazer logout:", error);
+    //Aparecer comentário
+    const [reveal, setReveal] = useState<string>("none")
+    const aparecerCommit = () => {
+        if (reveal == "none") {
+            setReveal("true");
+        } else {
+            setReveal("none");
         }
-    };
+    }
 
+    //Cor de Fundo - Tema
+    const dispatch = useDispatch();
+    const corSelect = useSelector((state: RootState) => state.posts.corFundo)
 
+    const corNeutro = () => {
+        dispatch(setColor("#B0A3AE"))
+    }
 
+    const corBlue = () => {
+        dispatch(setColor("#5C77B5"))
+    }
+
+    const corPink = () => {
+        dispatch(setColor("#E543D2"))
+    }
+
+    //Mostar comentários
+    const [showedit, setShowedit] = useState<string>("none")
+    const editPost = () => {
+        if (showedit == "none") {
+            setShowedit("true")
+        } else {
+            setShowedit("none")
+        }
+    }
+
+    //Estado do input editar
+    const [inpEdit, setInpedit] = useState<string>();
+
+    //RETURN
     return (
         <>
-
             <FeedPage>
-                <BarraLateral>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <Image style={{ width: '150px', height: '150px' }} src={avatar} roundedCircle />
-                            </Col>
-                        </Row>
-                    </Container>
-                    <TextTitle>{username}</TextTitle>
-                    <Ul>
-                        <Link to="/perfil">
-                            <Li>
-                                Inicio
-                            </Li>
-                        </Link>
-
-                        <Li>
-                            Perfil
-                        </Li>
-                        <Li>
-                            Mensagens
-                        </Li>
-                        <Li>
-                            Configuração
-                        </Li>
-                        <A onClick={handleLogout}>
-                            <Li>
-                                Sair
-                            </Li>
-
-                        </A>
-                    </Ul>
-                </BarraLateral>
-
-                <ContainerFeed>
-                    <TextTitle>Feed</TextTitle>
-                    {/*                     <ContainerPost>
-                        <TextArea placeholder="O que esta acontecendo..." maxLength={200} onChange={(event) => setInp(event.target.value)} id="nameArea" />
-                        <ContainerButton>
-                            <ButtonPost onClick={btnPost}>POSTAR</ButtonPost>
-                        </ContainerButton>
-                    </ContainerPost> */}
-
+                <Barra />
+                <ContainerFeed color={corSelect}>
+                    <ExtFeed>
+                        <div>
+                            <TextTitle>Feed</TextTitle>
+                        </div>
+                        <div>
+                            <Icon onClick={corNeutro} src={neutro}></Icon>
+                            <Icon onClick={corBlue} src={blue}></Icon>
+                            <Icon onClick={corPink} src={pink}></Icon>
+                        </div>
+                    </ExtFeed>
                     <Card style={{ width: '48rem', margin: '0 auto', boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', backgroundColor: '#1C1C1C' }}>
                         <TextArea placeholder="Escreva aqui.." maxLength={52} onChange={(event) => setInp(event.target.value)} id="nameArea" />
                         <Card.Body style={{ textAlign: 'right' }}>
-                            <ButtonPost onClick={btnPost}>POSTAR</ButtonPost>
+                            <ButtonPost color={corSelect} onClick={btnPost}>POSTAR</ButtonPost>
                         </Card.Body>
                     </Card>
-                    <Table>
-                        <Th>Nome</Th>
-                        <Th>Mensagem</Th>
-                        <Th>Data</Th>
-                        <Th>Hora</Th>
-                        <Th>Editar</Th>
-                        <tbody>
-                            {list_msg.map((item) => (
-                                <Tr key={item.id}>
-                                    <Td>{item.name}</Td>
-                                    <Td>{item.msg}</Td>
-                                    <Td>{item.dt}</Td>
-                                    <Td>{item.hour}</Td>
-                                    <Td><Icon src={icon}/></Td>
-                                </Tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                    <ContFeed2>
+                        {list_msg.map((item, index) => (
 
+                            <DivCard key={index}>
+                                <HeadPost>
+                                    <NomePost>{item.name}</NomePost>
+                                    <div>
+                                        <TimePost>{item.dt + " / "}</TimePost>
+                                        <TimePost>{item.hour}</TimePost>
+                                    </div>
+                                    <div>
+                                        <Icon onClick={editPost} src={lapis} />
+                                        <Icon onClick={() => {
+                                            //EXCLUIR POST
+                                            const id = item.id;
+                                            try {
+                                                fetch("https://fernando10092.pythonanywhere.com/data/delete", {
+                                                    method: 'DELETE',
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify({ id: id })
+                                                });
+                                                window.location.reload()
+                                                return alert("Dados Excluidos com sucesso");
+                                            } catch (error) {
+                                                alert("Erro ao excluir postagem" + error)
+                                            }
+                                        }} src={lixo} />
+                                    </div>
+                                </HeadPost>
+                                <ContainerMsg>
+                                    <ContInteragirPost display={showedit}>
+                                        <InputUpdatePost onChange={(event) => { setInpedit(event.target.value) }} value={item.inpEdit} placeholder="Edite seu post..." />
+                                        <Icon onClick={
+                                            async () => {
+                                                const dados = {
+                                                    id: item.id,
+                                                    msg: inpEdit
+                                                }
+                                                try {
+                                                    const response = await fetch("https://fernando10092.pythonanywhere.com/data/update/post", {
+                                                        method: 'PUT',
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify(dados)
+                                                    })
+                                                    if (response.ok) {
+                                                        console.log("Dados Alterados")
+                                                        window.location.reload()
+                                                    }
+                                                } catch (error) {
+                                                    alert("Erro ao editar")
+                                                }
+                                            }
+                                        } src={coment} />
+                                    </ContInteragirPost>
+                                    <MsgPost>{item.msg}</MsgPost>
+                                </ContainerMsg>
+                                <ContInteragir>
+                                    <BtnInteragir onClick={
+                                        async () => {
+                                            if (item.curtiu == "curtir") {
+                                                const dados = {
+                                                    id: item.id,
+                                                    curtiu: 'gostei'
+                                                }
+                                                try {
+                                                    const response = await fetch("https://fernando10092.pythonanywhere.com/data/update", {
+                                                        method: 'PUT',
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify(dados)
+                                                    })
+
+                                                    if (response.ok) {
+                                                        window.location.reload();
+                                                    }
+
+                                                } catch (erro) {
+                                                    alert("Erro ao atualizar" + erro)
+                                                    console.log(erro)
+                                                }
+                                            } else {
+
+                                                const dados = {
+                                                    id: item.id,
+                                                    curtiu: 'curtir'
+                                                }
+                                                try {
+                                                    const response = await fetch("https://fernando10092.pythonanywhere.com/data/update", {
+                                                        method: 'PUT',
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify(dados)
+                                                    })
+
+                                                    if (response.ok) {
+                                                        window.location.reload();
+                                                    }
+
+                                                } catch (erro) {
+                                                    alert("Erro ao atualizar" + erro)
+                                                    console.log(erro)
+                                                }
+
+                                            }
+
+
+                                        }
+                                    } cor="white">{item.curtiu}</BtnInteragir>
+                                    <BtnInteragir onClick={aparecerCommit} cor="white">{"comentar"}</BtnInteragir>
+
+                                </ContInteragir>
+
+                                <ExtrCommit display={reveal}>
+
+                                    <div>
+                                        <InputCommit
+                                            value={item.typing}
+                                            onChange={(event) => {
+                                                setListMsg((prevList) =>
+                                                    prevList.map((msg) =>
+                                                        msg.id === item.id
+                                                            ? { ...msg, typing: event.target.value }
+                                                            : msg
+                                                    )
+                                                );
+                                            }}
+                                            name="InpCom"
+                                        />
+
+                                        <Icon src={coment} onClick={async () => {
+                                            const dados = {
+                                                id: item.id,
+                                                commit1: item.typing
+                                            }
+                                            try {
+                                                const response = await fetch("https://fernando10092.pythonanywhere.com/data/update/c1", {
+                                                    method: 'PUT',
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify(dados)
+                                                })
+
+                                                if (response.ok) {
+                                                    console.log("Comentário inserido");
+                                                    setListMsg((prevList) =>
+                                                        prevList.map((
+                                                            msg) =>
+                                                            msg.id === item.id
+                                                                ? { ...msg, commit1: item.typing, typing: "" }
+                                                                : msg
+                                                        )
+                                                    );
+                                                } else {
+                                                    console.log("Erro ao inserir o comentário");
+                                                }
+
+                                            } catch (error) {
+                                                alert("Erro ao inserir o comentário: " + error)
+                                            }
+                                        }} />
+                                    </div>
+                                    <div>
+                                        <NewCommit>{"Último comentário: " + item.commit1}</NewCommit>
+                                    </div>
+                                </ExtrCommit>
+
+                                <p>_________________________________________________________</p>
+
+                            </DivCard>
+                        ))}
+                    </ContFeed2>
                 </ContainerFeed>
-
             </FeedPage>
-
         </>
     )
 }
