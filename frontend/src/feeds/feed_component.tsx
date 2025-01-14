@@ -64,6 +64,7 @@ const Feed = () => {
 
     // Função para postar mensagem
     const btnPost = () => {
+        try{
         if (inp !== "") {
             const data = new Date();
             const curtiu = "curtir";
@@ -80,7 +81,7 @@ const Feed = () => {
                 commit2: commit2,
                 commit3: commit3
             };
-
+            
             //Chamada via API - axios
             axios.post(API_URL, postData)
                 .then((response) => {
@@ -96,6 +97,10 @@ const Feed = () => {
         } else {
             alert("Digite algo para postar");
         }
+
+    }catch(error){
+        alert(error)
+    }
     };
 
     //Aparecer comentário
