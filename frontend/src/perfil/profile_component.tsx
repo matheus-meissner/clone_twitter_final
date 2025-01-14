@@ -8,7 +8,6 @@ import man2 from "../assets/man2.png";
 import man3 from "../assets/man3.png";
 import pinguim from "../assets/pinguin.png";
 import woman2 from "../assets/woman2.png";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { setImg } from "../store/reducers/slicers";
@@ -18,38 +17,38 @@ const Profile = () => {
     const username = localStorage.getItem("username");
 
     //Const foto
-    const [foto, setFoto] = useState<string>(avatar);
+    //const [foto, setFoto] = useState<string>(avatar);
     const dispatch = useDispatch()
     const selectorImg = useSelector((state: RootState)=>state.posts.avatar)
 
     //Funcao altera foto
     const rmFoto = () => {
         dispatch(setImg(avatar))
-        setFoto(avatar)
+        //setFoto(avatar)
     }
     const mFoto = () => {
         dispatch(setImg(man))
-        setFoto(man)
+        //setFoto(man)
     }
     const wFoto = () => {
         dispatch(setImg(woman))
-        setFoto(woman)
+        //setFoto(woman)
     }
     const pFoto = () => {
         dispatch(setImg(pinguim))
-        setFoto(pinguim)
+        //setFoto(pinguim)
     }
     const w2Foto = () => {
         dispatch(setImg(woman2))
-        setFoto(woman2)
+        //setFoto(woman2)
     }
     const m2Foto = () => {
         dispatch(setImg(man2))
-        setFoto(man2)
+        //setFoto(man2)
     }
     const m3Foto = () => {
         dispatch(setImg(man3))
-        setFoto(man3)
+        //setFoto(man3)
     }
     //RETURN
     return (
