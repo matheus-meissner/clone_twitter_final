@@ -12,7 +12,7 @@ const Login = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         //const response = await fetch("http://127.0.0.1:8000/api/login/", {
-        const response = await fetch("https://fernando10092.pythonanywhere.com/api/login/", {
+        const response = await fetch("http://fernando10092.pythonanywhere.com/api/token/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),
@@ -20,9 +20,11 @@ const Login = () => {
 
         if (response.ok) {
             const data = await response.json();
+            console.log("Resposta do backend:", data);
             // Armazene o token e o nome de usuário no localStorage
             localStorage.setItem("token", data.access); // Token JWT
             localStorage.setItem("username", username); // Nome do usuário
+            console.log("Token armazenado no localStorage:", localStorage.getItem("token"));
             navigate("/feed");
         } else {
             alert("Credenciais inválidas.");
