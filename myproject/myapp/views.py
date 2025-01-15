@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Data
 from .serializers import DataSerializer
 from rest_framework.decorators import api_view
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class RegisterAPIView(APIView):
     def post(self, request):
@@ -38,6 +39,7 @@ class LoginAPIView(APIView):
 
 
 class LogoutAPIView(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
