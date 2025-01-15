@@ -22,7 +22,7 @@ const Barra = () => {
             const token = localStorage.getItem("token");
             if (token) {
                 const response = await fetch(
-                    "http://fernando10092.pythonanywhere.com/api/logout/",
+                    "https://fernando10092.pythonanywhere.com/api/logout/",
                     {
                         method: "POST",
                         headers: {
